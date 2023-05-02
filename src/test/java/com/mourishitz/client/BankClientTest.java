@@ -1,11 +1,9 @@
 package com.mourishitz.client;
 
-import com.mourishitz.models.Balance;
-import com.mourishitz.models.BalanceCheckRequest;
-import com.mourishitz.models.BankServiceGrpc;
-import com.mourishitz.models.WithdrawRequest;
+import com.mourishitz.models.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -60,6 +58,20 @@ public class BankClientTest {
                 .build();
 
         this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
+        latch.await();
+    }
+
+    @Test
+    public void cashStreamingRequest() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        StreamObserver<DepositRequest> streamObserver = this.bankServiceStub.cashDeposit(new BalanceStreamObserver(latch));
+
+        for (int i = 0; i < 10; i++) {
+            DepositRequest depositRequest = DepositRequest.newBuilder().setAccountNumber(8).setAmount(10).build();
+            streamObserver.onNext(depositRequest);
+        };
+
+        streamObserver.onCompleted();
         latch.await();
     }
 }
