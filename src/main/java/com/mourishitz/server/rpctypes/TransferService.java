@@ -1,4 +1,4 @@
-package com.mourishitz.server;
+package com.mourishitz.server.rpctypes;
 
 import com.mourishitz.models.TransferRequest;
 import com.mourishitz.models.TransferResponse;

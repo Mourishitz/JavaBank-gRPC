@@ -1,4 +1,4 @@
-package com.mourishitz.client;
+package com.mourishitz.client.rpctypes;
 
 import com.mourishitz.models.Money;
 import io.grpc.stub.StreamObserver;

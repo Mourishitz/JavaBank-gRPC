@@ -1,4 +1,4 @@
-package com.mourishitz.server;
+package com.mourishitz.server.rpctypes;
 
 import java.util.Map;
 import java.util.function.Function;
